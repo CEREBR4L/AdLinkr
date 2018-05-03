@@ -1,6 +1,6 @@
 # Contributing
 
-When contributing to this project, if there is not already an existing issue, then please create one to open discussions aroiund 
+When contributing to this project, if there is not already an existing issue, then please create one to open discussions around 
 the changes. If there is already a triaged issue ready for work, please express your desire to work on this issue in a comment 
 to avoid multiple parties working on the same item.
 
