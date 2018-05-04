@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./app/server.js",
     "lint": "eslint .; exit 0",
-    "test": "export NODE_ENV=dev || SET NODE_ENV=dev && mocha ./tests/**/test_*.js && mocha ./tests/**/**/test_*.js",
+    "test": "cross-env NODE_ENV=dev && mocha ./tests/**/test_*.js && mocha ./tests/**/**/test_*.js",
     "test-watch": "nodemon --exec 'yarn test'"
   },
   "repository": {
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/jodylecompte/Adlinkr#readme",
   "devDependencies": {
     "chai": "^4.1.2",
+    "cross-env": "^5.1.4",
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "mocha": "^5.1.0",
