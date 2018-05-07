@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./app/server.js",
     "lint": "eslint .; exit 0",
-    "test": "cross-env NODE_ENV=dev && mocha ./tests/**/test_*.js && mocha ./tests/**/**/test_*.js",
+    "test": "cross-env NODE_ENV=dev && mocha ./tests --recursive",
     "test-watch": "nodemon --exec 'yarn test'"
   },
   "repository": {
