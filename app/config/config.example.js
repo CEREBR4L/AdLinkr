@@ -13,4 +13,8 @@ module.exports = {
     development: 'mongodb://localhost/AdLinkrDev',
     production: 'mongodb://localhost/AdLinker',
   },
+  auth: {
+    secret: 'your key here',
+    expirationTime: 600,
+  },
 };
