@@ -30,6 +30,9 @@ const linkSchema = new mongoose.Schema({
     utmMedium: {type: String},
     utmTerm: {type: String},
     utmContent: {type: String},
+    utmCampaign: {type: String},
+    createdTimestamp: {type: Number},
+    lastModifiedTimestamp: {type: Number},
 });
 
 linkSchema.statics.checkUniqueCode = function(code, callback) {
@@ -46,8 +49,12 @@ linkSchema.statics.createLink = function(linkData, callback) {
 
         Counter.nextId('link', (id) => {
             const newLink = new this(linkData);
+            const currentTimestamp = new Date().getTime();
+
             newLink._id = id;
             newLink.shortCode = encodeLinkId(id),
+            newLink.createdTimestamp = currentTimestamp;
+            newLink.lastModifiedTimestamp = currentTimestamp;
             newLink.save(callback);
         });
     });

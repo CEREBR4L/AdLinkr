@@ -37,12 +37,14 @@ describe('Models:  Link', function() {
             utmMedium: 'Test',
             utmTerm: 'Test',
             utmContent: 'Test',
+            utmCampaign: 'Test',
         });
 
         expect(link.utmSource).to.equal('Test');
         expect(link.utmMedium).to.equal('Test');
         expect(link.utmTerm).to.equal('Test');
         expect(link.utmContent).to.equal('Test');
+        expect(link.utmCampaign).to.equal('Test');
     });
     describe('Methods: ', () => {
         beforeEach(function(done) {

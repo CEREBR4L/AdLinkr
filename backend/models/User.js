@@ -43,6 +43,8 @@ const userSchema = new mongoose.Schema({
     forgotPasswordCode: {type: String},
     forgotPasswordTime: {type: Number},
     activationCode: {type: Number},
+    createdTimestamp: {type: Number},
+    lastModifiedTimestamp: {type: Number},
 });
 
 userSchema.statics.checkUnique = function(email, callback) {
@@ -60,8 +62,12 @@ userSchema.statics.createUser = function(userData, callback) {
         const newUser = new this(userData);
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(newUser.password, salt);
-        
+        const currentTimestamp = new Date().getTime();
+
         newUser.password = hash;
+        newUser.currentTimestamp = currentTimestamp;
+        newUser.lastModifiedTimestamp = currentTimestamp;
+
         newUser.save().then((data) => {
             callback(null, data);
         });
