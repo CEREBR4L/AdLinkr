@@ -8,7 +8,7 @@
  * Website: https://jodylecompte.com
  */
 
-const Campaign = require('../../app/models/Campaign');
+const Campaign = require('../../backend/models/Campaign');
 let expect = require('chai').expect;
 
 describe('Models: Campaigns', function() {

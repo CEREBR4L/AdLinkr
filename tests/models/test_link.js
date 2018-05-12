@@ -9,7 +9,7 @@
  */
 let expect = require('chai').expect;
 
-const Link = require('../../app/models/Link');
+const Link = require('../../backend/models/Link');
 const seed = require('../seeds/link.seed');
 
 describe('Models:  Link', function() {

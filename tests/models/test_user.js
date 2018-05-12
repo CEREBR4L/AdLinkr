@@ -8,11 +8,11 @@
  * Website: https://jodylecompte.com
  */
 
-const User = require('../../app/models/User');
+const User = require('../../backend/models/User');
 let expect = require('chai').expect;
 
 const seed = require('../seeds/user.seed');
-require('../../app/db');
+require('../../backend/db');
 
 describe('Models: User', function() {
     it('should be invalid if any required fields are empty', () => {

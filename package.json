@@ -4,9 +4,9 @@
   "description": "A URL Shortener / URL Managgement Tool for Marketing Campaigns",
   "main": "index.js",
   "scripts": {
-    "start": "node ./app/server.js",
+    "start": "node ./backend/server.js",
     "lint": "eslint .; exit 0",
-    "test": "cross-env NODE_ENV=dev && mocha ./tests --recursive",
+    "test": "mocha ./tests --recursive",
     "test-watch": "nodemon --exec 'yarn test'"
   },
   "repository": {

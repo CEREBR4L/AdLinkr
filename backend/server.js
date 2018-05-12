@@ -8,12 +8,11 @@
  * Website: https://jodylecompte.com
  */
 
-const mongoose = require('mongoose');
+require('./db');
 
-const config = require('./config/config');
+const app = require('./app');
+const port = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV === 'dev') {
-    mongoose.connect(config.db.development);
-} else {
-    mongoose.connect(config.db.production);
-}
+app.listen(port, () => {
+    console.log(`AdLinkr server initalized.`);
+});

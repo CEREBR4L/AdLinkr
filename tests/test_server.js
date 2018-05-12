@@ -9,7 +9,7 @@
  */
 
 const request = require('supertest');
-const {app} = require('../app/server');
+const app = require('../backend/app');
 
 describe('Express', () => {
     it('Should start an express app and serve status code 200 on root request',

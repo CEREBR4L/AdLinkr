@@ -10,15 +10,9 @@
 
 const request = require('supertest');
 const expect = require('chai').expect;
-const mongoose = require('mongoose');
 
-const User = require('../../../app/models/User');
-const {app, server} = require('../../../app/server');
-
-after(() => {
-    server.close();
-    mongoose.connection.close();
-});
+const User = require('../../../backend/models/User');
+const app = require('../../../backend/app');
 
 describe('POST auth/register', () => {
     beforeEach((done) => {
@@ -26,6 +20,7 @@ describe('POST auth/register', () => {
             done();
         });
     });
+
     it('Should register a new user with valid input', (done) => {
         request(app)
             .post('/api/auth/register')
@@ -45,7 +40,7 @@ describe('POST auth/register', () => {
             .end(done);
     });
 
-    it('Should fail to add a new new user without invalid information', (done) => {
+    it('Should fail without valid information', (done) => {
         request(app)
             .post('/api/auth/register')
             .expect((res) => {

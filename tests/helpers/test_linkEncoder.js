@@ -8,7 +8,7 @@
  * Website: https://jodylecompte.com
  */
 const expect = require('chai').expect;
-const encodeLinkId = require('../../app/helpers/encodeLinkId');
+const encodeLinkId = require('../../backend/helpers/encodeLinkId');
 
 describe('Helper Functions: encodeLinkId', function() {
     it('should encode a numeric ID into a mixed-string', () => {

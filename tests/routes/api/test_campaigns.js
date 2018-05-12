@@ -12,11 +12,10 @@ const request = require('supertest');
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
 
-const Campaign = require('../../../app/models/Campaign');
-const {app, server} = require('../../../app/server');
+const Campaign = require('../../../backend/models/Campaign');
+const app = require('../../../backend/app');
 
 after(() => {
-    server.close();
     mongoose.connection.close();
 });
 

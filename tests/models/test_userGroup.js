@@ -11,7 +11,7 @@
 const mongoose = require('mongoose');
 let expect = require('chai').expect;
 
-const User = require('../../app/models/UserGroup');
+const User = require('../../backend/models/UserGroup');
 
 after(() => {
     mongoose.connection.close();

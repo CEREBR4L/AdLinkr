@@ -10,7 +10,7 @@
 
 const expect = require('chai').expect;
 
-const Counter = require('../../app/models/Counter');
+const Counter = require('../../backend/models/Counter');
 const seed = require('../seeds/counter.seed');
 
 describe('Models: Counter', function() {

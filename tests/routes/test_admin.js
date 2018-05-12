@@ -9,11 +9,7 @@
  */
 
 const request = require('supertest');
-const {app, server} = require('../../app/server');
-
-after(() => {
-    server.close();
-});
+const app = require('../../backend/app');
 
 describe('Routes: Admin', () => {
     it('Should serve 200 on successful route', (done) => {
