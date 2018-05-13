@@ -11,23 +11,29 @@
 const express = require('express');
 const router = new express.Router();
 
+const utmParameterize = require('../helpers/utmParameterize');
 const Link = require('../models/Link');
 
 router.get('/', (req, res) => {
-    res.sendStatus(200);
+    res.sendStatus(401).send('Unauthorized');
 });
 
 router.get('/:shortCode', (req, res) => {
     const shortCode = req.params.shortCode;
 
-    Link.find({shortCode}).then((data) => {
-        if (data.length > 0) {
-            res.redirect(data.url);
+    Link.findOne({shortCode}).then((data) => {
+        if (data) {
+            res.redirect(utmParameterize(data.url, {
+                utm_source: data.utmSource,
+                utm_medium: data.utmMedium,
+                utm_term: data.utmTerm,
+                utm_content: data.utmContent,
+                utm_campaign: data.utmCampaign,
+            }));
         } else {
             res.sendStatus(404);
         }
     });
 });
-
 
 module.exports = router;

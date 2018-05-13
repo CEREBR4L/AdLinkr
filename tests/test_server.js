@@ -12,13 +12,6 @@ const request = require('supertest');
 const app = require('../backend/app');
 
 describe('Express', () => {
-    it('Should start an express app and serve status code 200 on root request',
-    (done) => {
-        request(app)
-            .get('/')
-            .expect(200, done);
-    });
-
     it('Should respond to valid asset requests served from static directory',
     (done) => {
         request(app)
