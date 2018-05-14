@@ -14,8 +14,8 @@ const urlWithQueryString = 'https://google.com?test=test';
 const urlWithoutQueryString = 'https:/google.com';
 const queryString = 'utm_source=testSource&utm_campaign=testCampaign';
 const sampleData = {
-    utm_source: 'testSource',
-    utm_campaign: 'testCampaign',
+    utmSource: 'testSource',
+    utmCampaign: 'testCampaign',
 };
 
 describe('Helper Functions: utmParameterize', () => {

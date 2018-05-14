@@ -8,8 +8,16 @@
  * Website: https://jodylecompte.com
  */
 
-const utmParameterize = (url, parameters) => {
+const utmParameterize = (url, data) => {
     const paramsArray = [];
+    const parameters = {
+        utm_source: data.utmSource,
+        utm_medium: data.utmMedium,
+        utm_term: data.utmTerm,
+        utm_content: data.utmContent,
+        utm_campaign: data.utmCampaign,
+    };
+
     for (let key in parameters) {
         if (parameters[key]) {
             paramsArray.push(`${key}=${parameters[key]}`);

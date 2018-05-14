@@ -23,13 +23,7 @@ router.get('/:shortCode', (req, res) => {
 
     Link.findOne({shortCode}).then((data) => {
         if (data) {
-            res.redirect(utmParameterize(data.url, {
-                utm_source: data.utmSource,
-                utm_medium: data.utmMedium,
-                utm_term: data.utmTerm,
-                utm_content: data.utmContent,
-                utm_campaign: data.utmCampaign,
-            }));
+            res.redirect(utmParameterize(data.url, data));
         } else {
             res.sendStatus(404);
         }
