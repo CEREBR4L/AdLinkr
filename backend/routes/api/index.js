@@ -11,9 +11,9 @@
 const express = require('express');
 const router = new express.Router();
 
-const CampaignRoutes = require('../routes/api/campaigns');
-const AuthRoutes = require('../routes/api/auth');
-const LinkRoutes = require('../routes/api/links');
+const CampaignRoutes = require('../../routes/api/campaigns/index');
+const AuthRoutes = require('../../routes/api/auth/index');
+const LinkRoutes = require('../../routes/api/links/index');
 
 router.use('/campaigns', CampaignRoutes);
 router.use('/auth', AuthRoutes);
