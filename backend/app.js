@@ -12,7 +12,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
-const coreRoutes = require('./routes/core');
+const coreRoutes = require('./routes/core/index');
 const apiRoutes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
 
