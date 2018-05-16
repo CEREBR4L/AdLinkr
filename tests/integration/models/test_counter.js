@@ -10,18 +10,10 @@
 
 const expect = require('chai').expect;
 
-const Counter = require('../../backend/models/Counter');
-const seed = require('../seeds/counter.seed');
+const Counter = require('../../../backend/models/Counter');
+const seed = require('../../seeds/counter.seed');
 
 describe('Models: Counter', function() {
-    it('should be invalid if count is empty', () => {
-        let counter = new Counter();
-
-        counter.validate((err) => {
-            expect(err.errors.count).to.exist;
-        });
-    });
-
     describe('Methods: ', () => {
         describe('nextId', () => {
             it('should initalize at 1000', (done) => {

@@ -12,8 +12,8 @@ const request = require('supertest');
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
 
-const Campaign = require('../../../backend/models/Campaign');
-const app = require('../../../backend/app');
+const Campaign = require('../../../../backend/models/Campaign');
+const app = require('../../../../backend/app');
 
 after(() => {
     mongoose.connection.close();

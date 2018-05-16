@@ -8,20 +8,16 @@
  * Website: https://jodylecompte.com
  */
 
-const mongoose = require('mongoose');
-let expect = require('chai').expect;
+const expect = require('chai').expect;
 
-const User = require('../../backend/models/UserGroup');
+const UserGroup = require('../../../backend/models/UserGroup');
 
-after(() => {
-    mongoose.connection.close();
-});
 
 describe('Models: UserGroup', function() {
     it('should be invalid if name is empty', () => {
-        const user = new User();
+        const userGroup = new UserGroup();
 
-        user.validate((err) => {
+        userGroup.validate((err) => {
             expect(err.errors.name).to.exist;
         });
     });

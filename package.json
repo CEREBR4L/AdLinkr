@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node ./backend/server.js",
     "lint": "eslint .; exit 0",
-    "test": "mocha ./tests --recursive",
-    "test-watch": "nodemon --exec 'yarn test'"
+    "test": "mocha ./tests/unit --recursive",
+    "test-watch": "nodemon --exec 'yarn test'",
+    "test-int": "mocha ./tests/integration --recursive"
   },
   "repository": {
     "type": "git",

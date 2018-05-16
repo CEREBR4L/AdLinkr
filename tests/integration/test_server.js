@@ -11,10 +11,17 @@
 const request = require('supertest');
 const app = require('../../backend/app');
 
-describe('Routes: Admin', () => {
-    it('Should serve 200 on successful route', (done) => {
+describe('Express', () => {
+    it('Should respond to valid asset requests served from static directory',
+    (done) => {
         request(app)
-            .get('/admin')
+            .get('/public/fixture.json')
             .expect(200, done);
+    });
+
+    it('Should return a 404 status code on invalid asset request', (done) => {
+        request(app)
+            .get('/public/jerrywasaracecardriver')
+            .expect(404, done);
     });
 });

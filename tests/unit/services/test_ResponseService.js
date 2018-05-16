@@ -12,7 +12,7 @@ const expect = require('chai').expect;
 const {
     successMessage,
     errorMessage,
-} = require('../../backend/services/ResponseService');
+} = require('../../../backend/services/ResponseService');
 
 const successWithData = {
     'success': {

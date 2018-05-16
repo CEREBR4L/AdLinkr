@@ -10,9 +10,9 @@
 
 const request = require('supertest');
 
-const app = require('../../backend/app');
-const Link = require('../../backend/models/Link');
-const seed = require('../seeds/link.seed');
+const app = require('../../../backend/app');
+const Link = require('../../../backend/models/Link');
+const seed = require('../../seeds/link.seed');
 
 describe('Routes: Core', () => {
     it('Should return an error on invalid route', (done) => {

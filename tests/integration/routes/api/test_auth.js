@@ -11,8 +11,8 @@
 const request = require('supertest');
 const expect = require('chai').expect;
 
-const User = require('../../../backend/models/User');
-const app = require('../../../backend/app');
+const User = require('../../../../backend/models/User');
+const app = require('../../../../backend/app');
 
 describe('POST auth/register', () => {
     beforeEach((done) => {
