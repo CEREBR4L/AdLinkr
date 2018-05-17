@@ -1,3 +1,8 @@
+const {errorMessage} = require('../../services/ResponseService');
+
 module.exports = (req, res) => {
-    res.sendStatus(401).send('Unauthorized');
+    const errResponse = errorMessage('Unauthorized');
+
+    res.sendStatus(401);
+    res.json(errResponse);
 };

@@ -12,8 +12,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
-const coreRoutes = require('./routes/core/index');
-const apiRoutes = require('./routes/api/index');
+const coreRoutes = require('./routes/core');
+const apiRoutes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
 
 const app = express();

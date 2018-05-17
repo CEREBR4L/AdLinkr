@@ -1,3 +1,13 @@
+/**
+ * AdLinkr
+ * A URL shortening tool for digital marketers
+ * https://github.com/jodylecompte/AdLinkr
+ * License: MIT
+ *
+ * Written by Jody LeCompte <jody@jodylecompte.com
+ * Website: https://jodylecompte.com
+ */
+
 const User = require('../../../models/User');
 
 module.exports = (req, res) => {
@@ -23,4 +33,4 @@ module.exports = (req, res) => {
     User.createUser(newUserData, (err, data) => {
         return res.json(data);
     });
-}
+};
