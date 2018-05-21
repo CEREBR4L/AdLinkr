@@ -15,27 +15,23 @@ const {
 } = require('../../../services/ResponseService');
 
 module.exports = (req, res) => {
-    req.check('id', 'A URL must be provided.').notEmpty();
+    req.check('id', 'An ID must be provided.').notEmpty();
 
     const errors = req.validationErrors();
     if (errors) {
         return res.json(errorMessage(errors[0].msg));
     }
 
-    Link.findByIdAndRemove(req.params.id, (err, data) => {
+    Link.findOne({_id: req.params.id}, (err, data) => {
         if (!data) {
-            return res.json(errorMessage('ID does not exist'));
+            return res.json(errorMessage('ID does not exist.'));
         }
 
         if (err) {
             return res.json(errorMessage(err));
         }
 
-        const response = successMessage('Link deleted', 'Link', {
-            _id: data._id,
-            url: data.url,
-            shortCode: data.shortCode,
-        });
+        const response = successMessage('Successful Load', 'Link', {data});
         res.json(response);
     });
 };

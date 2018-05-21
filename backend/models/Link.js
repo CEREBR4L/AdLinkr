@@ -25,6 +25,7 @@ const linkSchema = new mongoose.Schema({
     shortCode: {
         type: String,
         required: true,
+        unique: true,
     },
     utmSource: {type: String},
     utmMedium: {type: String},
@@ -42,20 +43,25 @@ linkSchema.statics.checkUniqueCode = function(code, callback) {
 };
 
 linkSchema.statics.createLink = function(linkData, callback) {
-    this.checkUniqueCode(linkData.shortCode, (data) => {
-        if (!data) {
-            return callback('ShortCode already exists', null);
+    Counter.nextId('link', (id) => {
+        const currentTimestamp = new Date().getTime();
+        const newLink = new this(linkData);
+
+        if (linkData.hasOwnProperty('shortCode')) {
+            newLink.shortCode = linkData['shortCode'];
+        } else {
+            newLink.shortCode = encodeLinkId(id);
         }
 
-        Counter.nextId('link', (id) => {
-            const newLink = new this(linkData);
-            const currentTimestamp = new Date().getTime();
-
-            newLink._id = id;
-            newLink.shortCode = encodeLinkId(id),
-            newLink.createdTimestamp = currentTimestamp;
-            newLink.lastModifiedTimestamp = currentTimestamp;
-            newLink.save(callback);
+        this.checkUniqueCode(newLink.shortCode, (data) => {
+            if (!data) {
+                return callback('ShortCode already exists', null);
+            } else {
+                newLink._id = id;
+                newLink.createdTimestamp = currentTimestamp;
+                newLink.lastModifiedTimestamp = currentTimestamp;
+                newLink.save(callback);
+            }
         });
     });
 };

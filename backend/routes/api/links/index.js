@@ -13,8 +13,14 @@ const router = new express.Router();
 
 const AddRoute = require('./add');
 const DeleteRoute = require('./delete');
+const ViewAllRoute = require('./view_all');
+const ViewRoute = require('./view');
+const EditRoute = require('./edit');
 
+router.get('/viewAll/:campaignId*?', ViewAllRoute);
+router.get('/view/:id*?', ViewRoute);
 router.post('/add', AddRoute);
-router.get('/delete/:id*?', DeleteRoute);
+router.put('/edit/:id*?', EditRoute);
+router.delete('/delete/:id*?', DeleteRoute);
 
 module.exports = router;
