@@ -60,21 +60,5 @@ describe('Models:  Link', function() {
                 });
             });
         });
-
-        describe('checkUniqueCode()', () => {
-            it('should return true with new link code', (done) => {
-                Link.checkUniqueCode('newCode', (res) => {
-                    expect(res).to.be.true;
-                    done();
-                });
-            });
-
-            it('should return true with new link code', (done) => {
-                Link.checkUniqueCode('goodCode', (res) => {
-                    expect(res).to.be.false;
-                    done();
-                });
-            });
-        });
     });
 });

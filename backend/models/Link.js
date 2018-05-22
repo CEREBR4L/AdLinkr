@@ -36,12 +36,6 @@ const linkSchema = new mongoose.Schema({
     lastModifiedTimestamp: {type: Number},
 });
 
-linkSchema.statics.checkUniqueCode = function(code, callback) {
-    this.find({shortCode: code}).then((data) => {
-        callback(data.length === 0);
-    });
-};
-
 linkSchema.statics.createLink = function(linkData, callback) {
     Counter.nextId('link', (id) => {
         const currentTimestamp = new Date().getTime();
@@ -53,16 +47,12 @@ linkSchema.statics.createLink = function(linkData, callback) {
             newLink.shortCode = encodeLinkId(id);
         }
 
-        this.checkUniqueCode(newLink.shortCode, (data) => {
-            if (!data) {
-                return callback('ShortCode already exists', null);
-            } else {
-                newLink._id = id;
-                newLink.createdTimestamp = currentTimestamp;
-                newLink.lastModifiedTimestamp = currentTimestamp;
-                newLink.save(callback);
-            }
-        });
+        newLink._id = id;
+        newLink.createdTimestamp = currentTimestamp;
+        newLink.lastModifiedTimestamp = currentTimestamp;
+        newLink.save()
+            .then((data) => callback(null, data))
+            .catch((error) => callback(error));
     });
 };
 

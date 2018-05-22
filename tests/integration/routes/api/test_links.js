@@ -87,8 +87,8 @@ describe('/links/ API Endpoints', () => {
                         .post('/api/links/add')
                         .send(exampleLinkCustom)
                         .expect((res) => {
-                            expect(res.body.error.message)
-                                .to.equal('ShortCode already exists');
+                            expect(res.body.error.message.errmsg)
+                                .to.contain('duplicate key');
                         })
                         .end(done);
                 });
