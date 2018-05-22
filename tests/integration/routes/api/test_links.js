@@ -138,7 +138,7 @@ describe('/links/ API Endpoints', () => {
         });
     });
 
-    describe.only('PUT links/edit/:id', () => {
+    describe('PUT links/edit/:id', () => {
         it('Should update link with valid information', (done) => {
             request(app)
                 .put('/api/links/edit/10000')
