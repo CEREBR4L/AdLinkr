@@ -9,19 +9,25 @@
  */
 
 const Campaign = require('../../../models/Campaign');
+const {
+    errorMessage,
+    successMessage,
+} = require('../../../services/ResponseService');
 
 module.exports = (req, res) => {
     if (!req.params.id) {
-        return res.json({
-            'error': 'Please ensure campaign ID is provided.',
-        });
+        return res.json(errorMessage('Please provide valid campaign ID.'));
     }
 
     Campaign.findByIdAndRemove(req.params.id, (err, data) => {
         if (err) {
-            return res.json({'error': err});
+            return res.json(errorMessage(err));
         }
 
-        res.json({'success': `Campaign "${data.name}" deleted`});
+        if (err) {
+            return res.json(errorMessage('ID is invalid.'));
+        }
+
+        res.json(successMessage('Campaign deleted', 'Campaign', data));
     });
 };

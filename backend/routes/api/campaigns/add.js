@@ -7,14 +7,19 @@
  * Written by Jody LeCompte <jody@jodylecompte.com
  * Website: https://jodylecompte.com
  */
+const {
+    errorMessage,
+    successMessage,
+} = require('../../../services/ResponseService');
 
 const Campaign = require('../../../models/Campaign');
 
+
 module.exports = (req, res) => {
     if (!req.body.hasOwnProperty('campaignName')) {
-        return res.json({
-            'error': 'Please ensure campaign name is not empty is a string.',
-        });
+        return res.json(
+            errorMessage('Please provide a valid string for campaign name.')
+        );
     }
 
     const currentTimestamp = new Date().getTime();
@@ -27,11 +32,10 @@ module.exports = (req, res) => {
     const newCampaign = new Campaign(newCampaignData);
     newCampaign.save((err, data) => {
         if (err) {
-            res.json({'error': err});
+            res.json(errorMessage(err));
             return;
         }
 
-        res.json(data);
-        return;
+        res.json(successMessage('Campaign added', 'Campaign', data));
     });
 };
