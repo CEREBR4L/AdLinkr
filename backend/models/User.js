@@ -45,6 +45,7 @@ const userSchema = new mongoose.Schema({
     activationCode: {type: Number},
     createdTimestamp: {type: Number},
     lastModifiedTimestamp: {type: Number},
+    refreshToken: {type: String},
 });
 
 userSchema.statics.checkUnique = function(email, callback) {
@@ -68,7 +69,7 @@ userSchema.statics.createUser = function(userData, callback) {
         newUser.currentTimestamp = currentTimestamp;
         newUser.lastModifiedTimestamp = currentTimestamp;
 
-        newUser.save().then((data) => {
+        newUser.save((err, data) => {
             callback(null, data);
         });
     });

@@ -8,12 +8,10 @@
  * Website: https://jodylecompte.com
  */
 
-module.exports = [
-    {
-        firstName: 'Jody',
-        lastName: 'LeCompte',
-        email: 'test@test.com',
-        groupId: '32512f',
-        password: 'null',
-    },
-];
+module.exports = [{
+    firstName: 'Jody',
+    lastName: 'LeCompte',
+    email: 'test@test.com',
+    groupId: '1',
+    password: '$2a$10$Hn2lm9XGvjJny573VlGXheQxqC7irTCc0JXlVVovzZwC8TZbMlkQW',
+}];
