@@ -7,6 +7,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { SettingsComponent } from './settings/settings.component';
+import { HeaderComponent } from './partials/header/header.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: DashboardComponent},
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
     CampaignsComponent,
     DashboardComponent,
     UsersComponent,
-    SettingsComponent
+    SettingsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
