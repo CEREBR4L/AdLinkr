@@ -152,6 +152,20 @@ describe('/links/ API Endpoints', () => {
                 .end(done);
         });
 
+        it('Should update last modified date on success', (done) => {
+            request(app)
+                .put('/api/links/edit/10000')
+                .send({update: {
+                    url: 'www.yahoo.com',
+                }})
+                .expect((res) => {
+                    const payload = res.body.data.payload;
+                    expect(payload.lastModifiedTimestamp)
+                        .to.not.equal(payload.createdTimestamp);
+                })
+                .end(done);
+        });
+
         it('Should return an error with no ID', (done) => {
             request(app)
                 .put('/api/links/edit')

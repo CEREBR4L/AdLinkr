@@ -27,6 +27,7 @@ module.exports = (req, res) => {
         return res.json(errorMessage('No changes provided'));
     }
 
+    update['lastModifiedTimestamp'] = new Date().getTime();
     Link.findOneAndUpdate({_id: req.params.id},
         {$set: update},
         {new: true})
