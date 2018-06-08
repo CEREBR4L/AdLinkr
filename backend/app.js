@@ -16,11 +16,14 @@ const coreRoutes = require('./routes/core');
 const apiRoutes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
 
+const authMiddleware = require('./auth');
+
 const app = express();
 
 app.use(bodyParser.json());
 app.use(expressValidator());
 app.use('/public', express.static('public'));
+app.use(authMiddleware);
 
 app.use('/api', apiRoutes);
 app.use('/admin', adminRoutes);

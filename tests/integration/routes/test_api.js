@@ -9,6 +9,7 @@
  */
 
 const request = require('supertest');
+const expect = require('chai').expect;
 
 const app = require('../../../backend/app');
 
@@ -26,6 +27,9 @@ describe('Routes: API', () => {
             .get('/api/egaega')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
-            .expect({'error': 'Invalid endpoint.'}, done);
+            .expect((data) => {
+                expect(data).to.haveOwnProperty('error');
+            })
+            .end(done);
     });
 });

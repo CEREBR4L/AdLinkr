@@ -9,6 +9,7 @@
  */
 
 const request = require('supertest');
+const expect = require('chai').expect;
 const app = require('../../backend/app');
 
 describe('Express', () => {
@@ -22,6 +23,9 @@ describe('Express', () => {
     it('Should return a 404 status code on invalid asset request', (done) => {
         request(app)
             .get('/public/jerrywasaracecardriver')
-            .expect(404, done);
+            .expect((data) => {
+                expect(data).to.haveOwnProperty('error');
+            })
+            .end(done);
     });
 });

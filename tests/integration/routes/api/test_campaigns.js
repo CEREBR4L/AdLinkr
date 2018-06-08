@@ -16,6 +16,21 @@ const Campaign = require('../../../../backend/models/Campaign');
 const app = require('../../../../backend/app');
 const seed = require('../../../seeds/campaign.seed');
 
+let token = '';
+
+before((done) => {
+    request(app)
+        .post('/api/auth/login')
+        .send({
+            username: 'test@test.com',
+            password: 'Test',
+        })
+        .expect((data) => {
+            token = data.body.data.payload.token;
+        })
+        .end(done);
+});
+
 after(() => {
     mongoose.connection.close();
 });
@@ -33,6 +48,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should add a new campaign with valid input', (done) => {
             request(app)
                 .post('/api/campaigns/add')
+                .set('x-access-token', token)
                 .send({campaignName: 'Test'})
                 .expect((res) => {
                     expect(res.body.data.payload.name).to.equal('Test');
@@ -45,6 +61,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should fail to add a new campaign with no name', (done) => {
             request(app)
                 .post('/api/campaigns/add')
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body).haveOwnProperty('error');
                 })
@@ -63,6 +80,7 @@ describe('/campaigns/ API Endpoints', () => {
             testCampaign.save((err, data) => {
                 request(app)
                     .delete(`/api/campaigns/delete/${data.id}`)
+                    .set('x-access-token', token)
                     .expect((res) => {
                         expect(res.body).to.haveOwnProperty('success');
                     })
@@ -78,6 +96,7 @@ describe('/campaigns/ API Endpoints', () => {
             });
                 request(app)
                     .delete(`/api/campaigns/delete/`)
+                    .set('x-access-token', token)
                     .expect((res) => {
                         expect(res.body).to.haveOwnProperty('error');
                     })
@@ -90,6 +109,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should error if ID is invalid', (done) => {
             request(app)
             .delete(`/api/campaigns/delete/12125`)
+            .set('x-access-token', token)
             .expect((res) => {
                 expect(res.body).to.haveOwnProperty('error');
             })
@@ -101,6 +121,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should edit record with succcessful input', (done) => {
             request(app)
                 .put('/api/campaigns/edit/578df3efb618f5141202a196')
+                .set('x-access-token', token)
                 .send({update: {
                     name: 'EditedCampaign',
                 }})
@@ -116,6 +137,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should error if ID not provided', (done) => {
             request(app)
             .put('/api/campaigns/edit')
+            .set('x-access-token', token)
             .expect((res) => {
                 expect(res.body.error.message)
                     .to.equal('An ID must be provided.');
@@ -129,6 +151,7 @@ describe('/campaigns/ API Endpoints', () => {
                 .send({update: {
                     name: 'EditedCampaign',
                 }})
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body.error.message)
                         .to.equal('Invalid ID.');
@@ -139,6 +162,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should error out if update data is blank', (done) => {
             request(app)
             .put('/api/campaigns/edit/578df3efb618f5141202a196')
+            .set('x-access-token', token)
             .expect((res) => {
                 expect(res.body.error.message)
                     .to.equal('No changes provided');
@@ -151,6 +175,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should show data for valid ID', (done) => {
             request(app)
                 .get(`/api/campaigns/view/578df3efb618f5141202a196`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.data.payload.data;
                     expect(data.name).to.equal('test campaign 1');
@@ -161,6 +186,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should error if ID not provided', (done) => {
             request(app)
                 .get(`/api/campaigns/view`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.error;
                     expect(data.message).to.equal('An ID must be provided.');
@@ -171,6 +197,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should error out if ID is invalid', (done) => {
             request(app)
                 .get(`/api/campaigns/view/578df3efb618f5141202a191`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.error;
                     expect(data.message).to.equal('Invalid ID.');
@@ -183,6 +210,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('Should show maximum of 25 results per page', (done) => {
             request(app)
                 .get('/api/campaigns/viewAll')
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.data.payload.data;
                     expect(data.length).to.equal(25);
@@ -193,6 +221,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('should show proper records if pagination used', (done) => {
             request(app)
                 .get('/api/campaigns/viewAll?pageNumber=2')
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.data.payload.pagination;
                     expect(data.currentPage).to.equal('2');
@@ -205,6 +234,7 @@ describe('/campaigns/ API Endpoints', () => {
         it('should return error on invalid page', (done) => {
             request(app)
                 .get('/api/campaigns/viewAll?pageNumber=3')
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body).to.haveOwnProperty('error');
                     expect(res.body.error.message)

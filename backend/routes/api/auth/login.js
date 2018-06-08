@@ -39,7 +39,7 @@ module.exports = (req, res) => {
             if (bcrypt.compareSync(req.body.password, data.password)) {
                 const refreshToken = Math.random().toString(36).substr(1, 10);
                 const token = jwt.sign({
-                    expiresIn: '3h',
+                    expiresIn: '8h',
                     data: {
                         userId: data._id,
                         refreshToken,
@@ -57,7 +57,7 @@ module.exports = (req, res) => {
                         user: data,
                         token,
                     };
-                    
+
                     return res.json(
                         successMessage('Logged in', 'User Token', returnData));
                 });

@@ -23,6 +23,20 @@ beforeEach((done) => {
     });
 });
 
+let token = '';
+before((done) => {
+    request(app)
+        .post('/api/auth/login')
+        .send({
+            username: 'test@test.com',
+            password: 'Test',
+        })
+        .expect((data) => {
+            token = data.body.data.payload.token;
+        })
+        .end(done);
+});
+
 describe('Auth API Endpoints: ', () => {
     describe('POST auth/register', () => {
         it('Should register a new user with valid input', (done) => {
@@ -67,6 +81,7 @@ describe('Auth API Endpoints: ', () => {
             testUser.save((err, data) => {
                 request(app)
                     .get(`/api/auth/delete/${data.id}`)
+                    .set('x-access-token', token)
                     .expect((res) => {
                         expect(res.body).to.haveOwnProperty('success');
                     })
@@ -77,6 +92,7 @@ describe('Auth API Endpoints: ', () => {
         it('Should error out if ID is not provided.', (done) => {
             request(app)
                 .get(`/api/Campaigns/Delete/`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body).to.haveOwnProperty('error');
                 })

@@ -31,6 +31,21 @@ const exampleLinkUTM = {
     utmCampaign: 'Test',
 };
 
+let token = '';
+
+before((done) => {
+    request(app)
+        .post('/api/auth/login')
+        .send({
+            username: 'test@test.com',
+            password: 'Test',
+        })
+        .expect((data) => {
+            token = data.body.data.payload.token;
+        })
+        .end(done);
+});
+
 after(() => {
     mongoose.connection.close();
 });
@@ -48,6 +63,7 @@ describe('/links/ API Endpoints', () => {
         it('Should add a new link with valid input', (done) => {
             request(app)
                 .post('/api/links/add')
+                .set('x-access-token', token)
                 .send(exampleLinkUTM)
                 .expect((res) => {
                     expect(res.body.data.payload.url).to.equal('https://google.com');
@@ -60,6 +76,7 @@ describe('/links/ API Endpoints', () => {
         it('Should fail to add a new link without valid input', (done) => {
             request(app)
                 .post('/api/links/add')
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body).haveOwnProperty('error');
                     expect(res.body.error.message)
@@ -71,6 +88,7 @@ describe('/links/ API Endpoints', () => {
         it('Should allow custom short codes', (done) => {
             request(app)
                 .post('/api/links/add')
+                .set('x-access-token', token)
                 .send(exampleLinkCustom)
                 .expect((res) => {
                     expect(res.body.data.payload.shortCode)
@@ -85,6 +103,7 @@ describe('/links/ API Endpoints', () => {
                 .then((data) => {
                     request(app)
                         .post('/api/links/add')
+                        .set('x-access-token', token)
                         .send(exampleLinkCustom)
                         .expect((res) => {
                             expect(res.body.error.message.errmsg)
@@ -110,6 +129,7 @@ describe('/links/ API Endpoints', () => {
             Link.createLink(testLink, (err, data) => {
                 request(app)
                     .delete(`/api/links/delete/${data.id}`)
+                    .set('x-access-token', token)
                     .expect((res) => {
                         expect(res.body).to.haveOwnProperty('success');
                     })
@@ -120,6 +140,7 @@ describe('/links/ API Endpoints', () => {
         it('Should error out if ID is not provided.', (done) => {
             request(app)
                 .delete(`/api/links/delete/`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body.error.message)
                         .to.equal('A URL must be provided.');
@@ -130,6 +151,7 @@ describe('/links/ API Endpoints', () => {
         it('Should fail if ID does not exist', (done) => {
             request(app)
             .delete('/api/links/delete/1')
+            .set('x-access-token', token)
             .expect((res) => {
                 expect(res.body.error.message)
                     .to.equal('ID does not exist');
@@ -142,6 +164,7 @@ describe('/links/ API Endpoints', () => {
         it('Should update link with valid information', (done) => {
             request(app)
                 .put('/api/links/edit/10000')
+                .set('x-access-token', token)
                 .send({update: {
                     url: 'www.yahoo.com',
                 }})
@@ -155,6 +178,7 @@ describe('/links/ API Endpoints', () => {
         it('Should update last modified date on success', (done) => {
             request(app)
                 .put('/api/links/edit/10000')
+                .set('x-access-token', token)
                 .send({update: {
                     url: 'www.yahoo.com',
                 }})
@@ -169,6 +193,7 @@ describe('/links/ API Endpoints', () => {
         it('Should return an error with no ID', (done) => {
             request(app)
                 .put('/api/links/edit')
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body.error.message)
                         .to.equal('An ID must be provided.');
@@ -179,6 +204,7 @@ describe('/links/ API Endpoints', () => {
         it('Should return an error if ID is invalid.', (done) => {
             request(app)
                 .put('/api/links/edit/1012512')
+                .set('x-access-token', token)
                 .send({update: {
                     url: 'www.yahoo.com',
                 }})
@@ -192,6 +218,7 @@ describe('/links/ API Endpoints', () => {
         it('Shoud not allow duplicate shortCode by edit', (done) => {
             request(app)
             .put('/api/links/edit/10000')
+            .set('x-access-token', token)
             .send({update: {
                 shortCode: 'jody',
             }})
@@ -205,6 +232,7 @@ describe('/links/ API Endpoints', () => {
         it('Shoud allow non-duplicate shortCode edit', (done) => {
             request(app)
             .put('/api/links/edit/10000')
+            .set('x-access-token', token)
             .send({update: {
                 shortCode: 'brandNewCode1',
             }})
@@ -219,6 +247,7 @@ describe('/links/ API Endpoints', () => {
         it('Should return information with valid id', (done) => {
             request(app)
                 .get(`/api/links/view/10000`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.data.payload.data;
                     expect(data._id).to.equal(10000);
@@ -229,6 +258,7 @@ describe('/links/ API Endpoints', () => {
         it('Should return error if no ID is provided', (done) => {
             request(app)
                 .get(`/api/links/view`)
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.error;
                     expect(data.message).to.equal('An ID must be provided.');
@@ -239,6 +269,7 @@ describe('/links/ API Endpoints', () => {
         it('Should error out if ID is invalid', (done) => {
             request(app)
                 .get('/api/links/view/12512512124')
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.error;
                     expect(data.message).to.equal('ID does not exist.');
@@ -251,6 +282,7 @@ describe('/links/ API Endpoints', () => {
         it('Should show maximum of 25 results per page', (done) => {
             request(app)
                 .get('/api/links/viewAll')
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.data.payload.data;
                     expect(data.length).to.equal(25);
@@ -261,6 +293,7 @@ describe('/links/ API Endpoints', () => {
         it('should show proper records if pagination used', (done) => {
             request(app)
                 .get('/api/links/viewAll?pageNumber=2')
+                .set('x-access-token', token)
                 .expect((res) => {
                     const data = res.body.data.payload.pagination;
                     expect(data.currentPage).to.equal('2');
@@ -273,6 +306,7 @@ describe('/links/ API Endpoints', () => {
         it('should return error on invalid page', (done) => {
             request(app)
                 .get('/api/links/viewAll?pageNumber=3')
+                .set('x-access-token', token)
                 .expect((res) => {
                     expect(res.body).to.haveOwnProperty('error');
                     expect(res.body.error.message)
