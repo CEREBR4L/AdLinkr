@@ -9,6 +9,8 @@
  */
 
 const User = require('../../../models/User');
+const {successMessage, errorMessage} = require('../../../services/ResponseService');
+
 
 module.exports = (req, res) => {
     req.checkBody('firstName', 'First Name is required').notEmpty();
@@ -31,6 +33,14 @@ module.exports = (req, res) => {
     };
 
     User.createUser(newUserData, (err, data) => {
-        return res.json(data);
+        if (err) {
+            if (err.includes('dup key')) {
+                return res.json(errorMessage('Email is already registered.'));
+            } else {
+                return res.json(errorMessage(err));
+            }
+        }
+
+        return res.json(successMessage('User registered', 'user', data));
     });
 };

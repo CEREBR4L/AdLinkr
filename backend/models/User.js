@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true,
         validate: {
             validator: function(v) {
                 // Regex pattern by Bryan Anderson (@dreamstarter)
@@ -48,31 +49,19 @@ const userSchema = new mongoose.Schema({
     refreshToken: {type: String},
 });
 
-userSchema.statics.checkUnique = function(email, callback) {
-    this.find({email}).then((data) => {
-        callback(data.length === 0);
-    });
-};
-
 userSchema.statics.createUser = function(userData, callback) {
-    this.checkUnique(userData.email, (data) => {
-        if (!data) {
-            return callback('Email already exists', null);
-        }
+    const newUser = new this(userData);
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(newUser.password, salt);
+    const currentTimestamp = new Date().getTime();
 
-        const newUser = new this(userData);
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(newUser.password, salt);
-        const currentTimestamp = new Date().getTime();
+    newUser.password = hash;
+    newUser.currentTimestamp = currentTimestamp;
+    newUser.lastModifiedTimestamp = currentTimestamp;
 
-        newUser.password = hash;
-        newUser.currentTimestamp = currentTimestamp;
-        newUser.lastModifiedTimestamp = currentTimestamp;
-
-        newUser.save((err, data) => {
-            callback(null, data);
-        });
-    });
+    newUser.save()
+        .then((data) => callback(null, data))
+        .catch((e) => callback(e.message, null));
 };
 
 module.exports = mongoose.model('User', userSchema);
