@@ -10,7 +10,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { HeaderComponent } from './partials/header/header.component';
 
 const appRoutes: Routes = [
-  { path: '', pathMatch: 'full', component: DashboardComponent},
+  { path: '', pathMatch: 'full', component: CampaignsComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'campaigns', component: CampaignsComponent },
   { path: 'users', component: UsersComponent},
