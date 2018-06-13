@@ -22,24 +22,6 @@ describe('Models: User', function() {
               }).then(() => done());
         });
 
-        describe('checkUnique', () => {
-            it('checkUnique should return false if duplicate user is found',
-            function(done) {
-                User.checkUnique('test@test.com', function(data) {
-                    expect(data).to.equal(false);
-                    done();
-                });
-            });
-
-            it('checkUnique should return false if duplicate user is true',
-            function(done) {
-                User.checkUnique('teswft@test.com', function(data) {
-                    expect(data).to.equal(true);
-                    done();
-                });
-            });
-        });
-
         describe('createUser', () => {
             it('should create a new user with valid input', (done) => {
                 const userData = {

@@ -14,7 +14,7 @@ const app = require('../../../backend/app');
 const Link = require('../../../backend/models/Link');
 const seed = require('../../seeds/link.seed');
 
-describe.only('Routes: Core', () => {
+describe('Routes: Core', () => {
     beforeEach((done) => {
         Link.remove({}).then(() => {
             Link.insertMany(seed, (err, data) => {

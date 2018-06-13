@@ -50,10 +50,10 @@ describe('Auth API Endpoints: ', () => {
                     groupId: '1',
                 })
                 .expect((res) => {
-                    expect(res.body.firstName).to.equal('Test');
-                    expect(res.body.lastName).to.equal('Test');
-                    expect(res.body.email).to.equal('test123@test.com');
-                    expect(res.body.groupId).to.equal('1');
+                    expect(res.body.data.payload.firstName).to.equal('Test');
+                    expect(res.body.data.payload.lastName).to.equal('Test');
+                    expect(res.body.data.payload.email).to.equal('test123@test.com');
+                    expect(res.body.data.payload.groupId).to.equal('1');
                 })
                 .end(done);
         });
@@ -73,7 +73,7 @@ describe('Auth API Endpoints: ', () => {
             const testUser = new User({
                 firstName: 'Test',
                 lastName: 'Test',
-                email: 'test@test.com',
+                email: 'test@testertest.com',
                 password: 'Test',
                 groupId: '1',
             });
