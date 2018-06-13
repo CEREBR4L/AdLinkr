@@ -12,49 +12,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+<style>
+    .no-js-cont{
+        position: fixed;
+        top: 0;
+    }
+
+    .no-js {
+        background-color: #C92320;
+        color: #fff;
+        padding: 20px 0;
+        font-family: sans-serif;
+        display: block;
+        text-align: center;
+        width: 100vw;
+    }
+</style>
 
 <body>
 
-    <app-root class="app-root"></app-root>
+    <noscript>
+        <div class="no-js-cont">
+            <span class="no-js">
+            You don't have javascript enabled, this requires javascript to work, please <a style="color: rgba(0, 0, 0, 0.6);" href="https://www.enable-javascript.com/" target="_blank">enable javascript</a>
+            </span>
+        </div>
+    </noscript>
 
-  <footer class="page-footer orange">
+  <app-root class="app-root">
     <div class="container">
       <div class="row">
-        <div class="col l4 s12">
-          <h5 class="white-text">Powered by
-            <a class="orange-text text-lighten-3" href="https://github.com/jodylecompte/AdLinkr">
-              AdLinkr
-            </a>
-          </h5>
-        </div>
-        <div class="col l4 s12">
-          <h5 class="white-text">
-            <a class="orange-text text-lighten-3" href="https://github.com/jodylecompte/AdLinkr">
-              Get Support
-            </a>
-          </h5>
-        </div>
-        <div class="col l4 s12">
-          <h5 class="white-text">
-            <a class="orange-text text-lighten-3" href="https://github.com/jodylecompte/AdLinkr">
-              Github
-            </a>
-          </h5>
+        <div class="col s6 offset-s3">
+          <div style="margin-top: 50vh;">
+            <div class="progress">
+              <div class="indeterminate"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer-copyright">
-      <div class="container">
-        <h6>Coded with ♥ by
-          <a href="https://jodylecompte.com" class="orange-text text-lighten-3">
-            Jody LeCompte.
-          </a>
-          &copy;2018. Made freely available under MIT License.
-        </h6>
-        </a>
-      </div>
-    </div>
-  </footer>
+  </app-root>
   <!-- Compiled and minified Materialize JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 </body>
