@@ -14,7 +14,17 @@ const app = require('../../../backend/app');
 const Link = require('../../../backend/models/Link');
 const seed = require('../../seeds/link.seed');
 
-describe('Routes: Core', () => {
+describe.only('Routes: Core', () => {
+    beforeEach((done) => {
+        Link.remove({}).then(() => {
+            Link.insertMany(seed, (err, data) => {
+                if (!err) {
+                    done();
+                }
+            });
+        });
+    });
+
     it('Should return an error on invalid route', (done) => {
         request(app)
             .get('/fw')
@@ -25,12 +35,19 @@ describe('Routes: Core', () => {
     });
 
     it('Should redirect on a valid URL', (done) => {
-        Link.remove({}).then(() => {
-            Link.insertMany(seed, (err, data) => {
-                request(app)
-                .get('/goodCode')
-                .expect(302, done);
-            });
-        });
+        request(app)
+            .get('/goodCode')
+            .expect(302, done);
+    });
+
+    it('Should increase the click count of valid link', (done) => {
+        request(app)
+            .get('/goodCode')
+            .expect((data) => {
+                Link.findOne({shortCode: 'goodCode'}, (err, data) => {
+                    expect(data.clickCount).to.equal(1);
+                });
+            })
+            .end(done);
     });
 });

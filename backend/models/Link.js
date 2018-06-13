@@ -27,6 +27,10 @@ const linkSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    clickCount: {
+        type: Number,
+        default: 0,
+    },
     utmSource: {type: String},
     utmMedium: {type: String},
     utmTerm: {type: String},

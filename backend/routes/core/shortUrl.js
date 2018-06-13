@@ -14,11 +14,12 @@ const Link = require('../../models/Link');
 module.exports = (req, res) => {
     const shortCode = req.params.shortCode;
 
-    Link.findOne({shortCode}).then((data) => {
-        if (data) {
-            res.redirect(utmParameterize(data.url, data));
-        } else {
-            res.sendStatus(404);
-        }
-    });
+    Link.findOneAndUpdate({shortCode}, {$inc: {clickCount: 1}})
+        .then((data) => {
+            if (data) {
+                res.redirect(utmParameterize(data.url, data));
+            } else {
+                res.sendStatus(404);
+            }
+        });
 };
